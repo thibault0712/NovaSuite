@@ -1,0 +1,198 @@
+import React from 'react';
+import Popup from 'reactjs-popup';
+import { MdAdd } from 'react-icons/md'
+import { HandleNewObjective } from '../handleClick/handleNewObjective';
+import { HandleDeletObjective } from '../handleClick/handleDeletObjective'
+import { HandleEditObjective } from '../handleClick/handleEditObjective';
+import { HandleDeletImage } from "../handleClick/handleDeletImage";
+import './styles/popup.css'
+import { MdCloudUpload, MdDelete } from "react-icons/md";
+
+
+
+export function PopupObjective(objective, documentId, node, setUpdate, make, lastObjective, blockedNodes, formData, setFormData, setFile, file) {
+  var File;
+  const handleChange = (e) => {
+    if (e.target.name === "title" && e.target.value.length <= 31){
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+    if (e.target.name === "content"){
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+  };
+
+  const handleEditPopupOpen = () => {
+    setFormData({title: objective.title, content: objective.content}); // Réinitialise formData lorsque la popup d'édition est ouverte
+  };
+
+  const handleCreatePopupOpen = () => {
+    setFormData({title: '', content: ''}); // Réinitialise formData lorsque la popup d'édition est ouverte
+  };
+
+  const handleChangeImage = (event) => {
+    File = event.target.files[0];
+    console.log(File)
+}
+
+  return (
+  <div className='relative items-center mb-16'>
+    <Popup
+      trigger={<button id={objective.id}  className={`overflow-hidden p-1 bg-slate-500 hover:bg-slate-500 w-28 text-xs h-9 text-white rounded mr-2 border-2 inline-flex items-center ${make === true ? "border-green-400" : lastObjective && lastObjective.make === true ? "border-orange-400" : "border-red-400"}`} onClick={handleEditPopupOpen}>
+                <span style={{margin: '0 auto'}}>{objective.title}</span>
+              </button>}
+      modal
+      nested
+      onOpen={() => handleEditPopupOpen()}
+    >
+      { close => (
+        
+        <div className="modal bg-slate-700 rounded-xl pb-4 mx-4 my-6 shadow-md overflow-y-auto scrollbar-thin scrollbar-track-slate-700/0 scrollbar-thumb-slate-900/50" style={{ width: '85vw', maxWidth: '600px', maxHeight: '85vh' }}>
+          <div className="mb-3 text-center text-xl py-3 font-bold text-white bg-slate-700 sticky top-0 z-10">Editer un objectif</div>
+          <div className="content mx-5 mt-4 text-justify">
+            <div>
+              <p className='text-white text-sm tracking-wide font-medium mb-2'>Titre</p>
+            </div>
+            <div className='pt-1 pl-3'>
+              <input name='title' value={formData.title} onChange={handleChange} className="shadow-inner bg-slate-600/50 appearance-none border rounded w-full py-2 px-3 border-slate-700 text-white leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Utiliser Adrénalia"></input>
+            </div>
+          </div>
+          {objective.image === "none" &&
+            <div className="content mx-5 mt-4 text-justify">
+              <div>
+                <p className='text-white text-sm tracking-wide font-medium mb-2'>Image</p>
+              </div>
+              <div className='pt-1 pl-3'>
+                <input onChange={handleChangeImage} accept="image/*" className="file:py-2 file:text-gray-300 file:px-2 file:bg-slate-600 focus:text-white file:border-none block w-full text-sm border rounded-lg cursor-pointer text-gray-400 focus:outline-none bg-gray-600/50 border-gray-600 placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file"></input>
+              </div>
+          </div>
+          }
+          {objective.image !== "none" && objective.image !== "treatment" &&
+            <div className="content pb-3 mx-5 mt-4 text-justify">
+              <div className='flex mb-2'>
+                <p className=' text-white text-sm tracking-wide font-medium'>Image</p>
+                <button className='ml-2'onClick={() => HandleDeletImage(documentId, node, objective, setUpdate)} ><MdDelete className='text-red-500 h-full w-auto'/></button>
+              </div>
+                <div className="pl-3">
+                  <img src={objective.image} className='h-auto max-w-full shadow-inner rounded m-4' alt="..." style={{margin: "0 auto"}}></img>
+                </div>
+            </div>
+          }
+          {objective.image === "treatment" &&
+            <div className="content mx-5 mt-4 text-justify">
+              <div>
+                <p className=' text-white text-sm tracking-wide font-medium mb-2'>Image</p>
+              </div>
+              <div className="ml-4"> 
+                <div style={{margin: "0 auto"}} className='pl-3 mt-4 w-full bg-slate-600/50 border border-slate-500 text-center rounded text-white '>
+                  <div className='mt-4 mb-2'><MdCloudUpload style={{margin: "0 auto"}} className="w-8 h-8"/></div>
+                  <div className='pb-4'><p>En cours de traitement, ne pas réactualiser la page</p></div>
+                </div>
+              </div>
+            </div>
+          }
+          <div className="content pb-1 mx-5 text-justify mt-8">
+            <div>
+              <p className=' text-white text-sm tracking-wide font-medium mb-2'>Description</p>
+            </div>
+            <div className='pt-1 pl-3'>
+              <textarea name='content' value={formData.content} onChange={handleChange} className="shadow-inner resize-y bg-slate-600/50 appearance-none border border-slate-700 rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline h-48" id="username" type="text" placeholder="Utiliser plus souvent Adrénalia pour être plus organisé !"></textarea>
+            </div>
+          </div>
+          <div className="pt-1 flex justify-end mr-5">
+            {objective.parents.length !== 0 &&
+              <button onClick={ async () => {HandleDeletObjective(documentId, node, objective, lastObjective, setUpdate)}} className="bg-red-700 hover:bg-red-600 w-30 text-white font-bold py-2 px-4 rounded mr-5"> Supprimer </button>
+            }
+            <button onClick={ async () => {await HandleEditObjective(documentId, node, objective, formData.title, formData.content, setUpdate, File); close()}} className="bg-green-700 hover:bg-green-600 w-30 text-white font-bold py-2 px-4 rounded">Sauvegarder</button>
+          </div>
+        </div>
+      )}
+    </Popup>
+
+    {objective.parents.length === 0 && 
+      <Popup
+          trigger={<button className='rounded-full py-1 px-1 bg-slate-800 mr-3'><MdAdd className='text-white'/></button>}
+          modal
+          nested
+          onOpen={() => handleCreatePopupOpen()}
+        >
+          {close => (
+            
+            <div className="modal bg-slate-700 rounded-xl pb-4 mx-4 my-6 shadow-md overflow-y-auto scrollbar-thin scrollbar-track-slate-700/0 scrollbar-thumb-slate-900/50" style={{ width: '85vw', maxWidth: '600px', maxHeight: '85vh' }}>
+              <div className="mb-3 text-center text-xl py-3 font-bold text-white bg-slate-700 sticky top-0 z-10">Ajouter un nouvel objectif</div>
+              <div className="content mx-5 mt-4 text-justify">
+                <div>
+                  <p className='text-white text-sm tracking-wide font-medium mb-2'>Titre</p>
+                </div>
+                <div className='pt-1 pl-3'>
+                  <input name='title' value={formData.title} onChange={handleChange} className="shadow-inner bg-slate-600/50 appearance-none border rounded w-full py-2 px-3 border-slate-700 text-white leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Utiliser Adrénalia"></input>
+                </div>
+              </div>
+              <div className="content mx-5 mt-4 text-justify">
+                <div>
+                  <p className='text-white text-sm tracking-wide font-medium mb-2'>Image</p>
+                </div>
+                <div className='pt-1 pl-3'>
+                  <input onChange={handleChangeImage} accept="image/*" className="file:py-2 file:text-gray-300 file:px-2 file:bg-slate-600 focus:text-white file:border-none block w-full text-sm border rounded-lg cursor-pointer text-gray-400 focus:outline-none bg-gray-600/50 border-gray-600 placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file"></input>
+                </div>
+              </div>
+              <div className="content pb-1 mx-5 text-justify mt-8">
+                <div>
+                  <p className=' text-white text-sm tracking-wide font-medium mb-2'>Description</p>
+                </div>
+                <div className='pt-1 pl-3'>
+                  <textarea name='content' value={formData.content} onChange={handleChange} className="shadow-inner resize-y bg-slate-600/50 appearance-none border border-slate-700 rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline h-48" id="username" type="text" placeholder="Utiliser plus souvent Adrénalia pour être plus organisé !"></textarea>
+                </div>
+              </div>
+              <div className="pt-4 flex justify-end mr-5">
+                <button onClick={async() => {await HandleNewObjective(documentId, node, objective, formData.title, formData.content, setUpdate, File, true); close()}} className="bg-green-500 w-30 text-white font-bold py-2 px-4 rounded">Créer</button>
+              </div>
+            </div>
+          )}
+        </Popup>
+      }
+    <div style={{marginTop: 3}} className='absolute z-40 ml-11'>
+      <Popup
+        trigger={<button className='rounded-full py-1 px-1 bg-slate-800 mr-3'><MdAdd className='text-white'/></button>}
+        modal
+        nested
+        onOpen={() => handleCreatePopupOpen()}
+      >
+        {close => (
+          
+          <div className="modal bg-slate-700 rounded-xl pb-4 mx-4 my-6 shadow-md overflow-y-auto scrollbar-thin scrollbar-track-slate-700/0 scrollbar-thumb-slate-900/50" style={{ width: '85vw', maxWidth: '600px', maxHeight: '85vh' }}>
+            <div className="mb-3 text-center text-xl py-3 font-bold text-white bg-slate-700 sticky top-0 z-10">Ajouter un nouvel objectif</div>
+            <div className="content mx-5 mt-4 text-justify">
+              <div>
+                <p className='text-white text-sm tracking-wide font-medium mb-2'>Titre</p>
+              </div>
+              <div className='pt-1 pl-3'>
+                <input name='title' value={formData.title} onChange={handleChange} className="shadow-inner bg-slate-600/50 appearance-none border rounded w-full py-2 px-3 border-slate-700 text-white leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Utiliser Adrénalia"></input>
+              </div>
+            </div>
+            <div className="content mx-5 mt-4 text-justify">
+              <div>
+                <p className='text-white text-sm tracking-wide font-medium mb-2'>Image</p>
+              </div>
+              <div className='pt-1 pl-3'>
+                <input onChange={handleChangeImage} accept="image/*" className="file:py-2 file:text-gray-300 file:px-2 file:bg-slate-600 focus:text-white file:border-none block w-full text-sm border rounded-lg cursor-pointer text-gray-400 focus:outline-none bg-gray-600/50 border-gray-600 placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file"></input>
+              </div>
+            </div>
+            <div className="content pb-1 mx-5 text-justify mt-8">
+              <div>
+                <p className=' text-white text-sm tracking-wide font-medium mb-2'>Description</p>
+              </div>
+              <div className='pt-1 pl-3'>
+                <textarea name='content' value={formData.content} onChange={handleChange} className="shadow-inner resize-y bg-slate-600/50 appearance-none border border-slate-700 rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline h-48" id="username" type="text" placeholder="Utiliser plus souvent Adrénalia pour être plus organisé !"></textarea>
+              </div>
+            </div>
+            <div className="pt-4 flex justify-end mr-5">
+              <button onClick={async() => {await HandleNewObjective(documentId, node, objective, formData.title, formData.content, setUpdate, File); close()}} className="bg-green-500 w-30 text-white font-bold py-2 px-4 rounded">Créer</button>
+            </div>
+          </div>
+        )}
+      </Popup>
+    </div>
+
+  </div>
+  );
+}
