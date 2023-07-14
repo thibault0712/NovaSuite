@@ -2,17 +2,37 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/style.css';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import DocumentView from './pages/user/documentView/DocumentView';
-import DocumentEdit from './pages/user/documentEdit/DocumentEdit';
+import DocumentView from './pages/user/adrenalia/documentView/DocumentView';
+import DocumentEdit from './pages/user/adrenalia/documentEdit/DocumentEdit';
+import Login from './pages/connection/login';
+import Inscription from './pages/connection/inscription';
+import Home from './pages/user/Home';
+import UserProfilEdition from './pages/user/settings/userProfilEdition/UserProfilEdition';
 import reportWebVitals from './reportWebVitals';
 
 const documentView = createBrowserRouter([
   {
+    path: "/inscription",
+    element: <Inscription />,
+  },
+  {
     path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/monCompte",
+    element: <UserProfilEdition />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/adrenalia/view",
     element: <DocumentView />,
   },
   {
-    path: "/edition",
+    path: "/adrenalia/edition",
     element: <DocumentEdit />,
   },
 ]);
