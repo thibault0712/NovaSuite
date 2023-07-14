@@ -1,0 +1,36 @@
+@media (prefers-color-scheme: light) {  
+  .popupMenu-arrow {
+    color: rgb(249 250 251);
+    stroke: rgb(107 114 128 / 0.3);
+    z-index: 500;
+  }
+
+  .popupMenu-content {
+    border-radius: 0.25rem;
+    border-width: 1px;
+    border-color: rgb(107 114 128 / 0.3);
+    background: rgb(249 250 251);
+    box-shadow: 0 0 3px rgba(0,0,0,.16);
+    width: 6rem;
+  }
+}
+
+@media (prefers-color-scheme: dark) {  
+  .popupMenu-arrow {
+    color: rgb(17 24 39);
+    stroke: rgb(107 114 128 / 0.3);
+    z-index: 500;
+  }
+  
+  .popupMenu-content {
+    border-radius: 0.25rem;
+    border-width: 1px;
+    border-color: rgb(107 114 128 / 0.3);
+    background: rgb(17 24 39);
+    box-shadow: 0 0 3px rgba(0,0,0,.16);
+    width: 6rem;
+  }
+}
+  .popupMenu-overlay {
+    background: rgba(0, 0, 0, 0) !important; 
+  }
