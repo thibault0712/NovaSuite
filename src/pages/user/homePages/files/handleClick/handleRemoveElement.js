@@ -1,4 +1,4 @@
-import { db } from "../../../data/firebase";
+import { db } from "../../../../../data/firebase";
 import { deleteDoc, doc } from "firebase/firestore";
 
 export async function HandlleRemoveElement(element, elements, setElements){

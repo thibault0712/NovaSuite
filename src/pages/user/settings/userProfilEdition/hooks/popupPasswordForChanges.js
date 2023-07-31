@@ -16,10 +16,10 @@ export function PopupPasswordForChanges(setPassword, password, setShowPopup,form
           {close => (
             
             <div className="modal bg-gray-50 dark:bg-gray-900 rounded-xl pb-4 mx-4 my-6 shadow-md overflow-y-auto scrollbar-thin scrollbar-track-slate-700/0 scrollbar-thumb-slate-900/50" style={{ width: '85vw', maxWidth: '600px', maxHeight: '85vh' }}>
-              <div className="mb-3 text-center text-xl py-3 font-bold text-black dark:text-white bg-gray-50 dark:bg-gray-900 sticky top-0 z-10">Renommer l'objectif</div>
+              <div className="mb-3 text-center text-xl py-3 font-bold text-black dark:text-white bg-gray-50 dark:bg-gray-900 sticky top-0 z-10">Rentrer le mot de passe</div>
               <div className="content mx-5 mt-4 text-justify">
                 <div>
-                  <p className='text-black dark:text-white text-sm tracking-wide ml-2 font-medium mb-2'>Titre</p>
+                  <p className='text-black dark:text-white text-sm tracking-wide ml-2 font-medium mb-2'>Mot de passe</p>
                 </div>
                 <div className='pt-1 pl-3'>
                 <input

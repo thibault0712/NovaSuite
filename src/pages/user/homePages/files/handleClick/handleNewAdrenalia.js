@@ -1,5 +1,5 @@
 import { collection, doc, addDoc, updateDoc } from "firebase/firestore"; 
-import { db } from "../../../data/firebase";
+import { db } from "../../../../../data/firebase";
 import { serverTimestamp } from 'firebase/firestore';
 
 export async function HandleNewAdrenalia(userUID){
@@ -8,7 +8,8 @@ export async function HandleNewAdrenalia(userUID){
         type: "Adrenalia",
         title: "Adrenalia",
         owner: userUID,
-        date: serverTimestamp()
+        date: serverTimestamp(),
+        shared: []
     });
     const elementId = elementRef.id
 

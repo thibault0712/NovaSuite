@@ -1,4 +1,4 @@
-import { db } from "../../../data/firebase";
+import { db } from "../../../../../data/firebase";
 import { serverTimestamp } from 'firebase/firestore';
 import { doc, updateDoc } from "firebase/firestore"; 
 

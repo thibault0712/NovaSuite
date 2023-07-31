@@ -14,6 +14,7 @@ export function HandleInscription(setFormData, formData, setError, navigate){
             .then(async (response) => {
                 await setDoc(doc(db, "users", response.user.uid), {
                     userName: formData.userName,
+                    email: formData.email
                 });
                 sessionStorage.setItem('Auth Token', response._tokenResponse.refreshToken)
                 navigate('/');

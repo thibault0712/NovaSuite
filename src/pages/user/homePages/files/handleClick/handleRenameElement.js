@@ -1,4 +1,4 @@
-import { db } from "../../../data/firebase";
+import { db } from "../../../../../data/firebase";
 import {doc, updateDoc} from "firebase/firestore";
 
 export async function HandleRenameElement(elementId, title, setElements, elements) {

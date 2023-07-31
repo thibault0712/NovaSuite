@@ -1,5 +1,5 @@
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../../../data/firebase";
+import { db } from "../../../../../data/firebase";
 
 export async function GetElementsInformations(setElements, userUID){
     const q = query(collection(db, "elements"), where("owner", "==", userUID));

@@ -6,7 +6,9 @@ import DocumentView from './pages/user/adrenalia/documentView/DocumentView';
 import DocumentEdit from './pages/user/adrenalia/documentEdit/DocumentEdit';
 import Login from './pages/connection/login';
 import Inscription from './pages/connection/inscription';
-import Home from './pages/user/Home';
+import Home from './pages/user/homePages/home/Home';
+import Files from './pages/user/homePages/files/files';
+import Shared from './pages/user/homePages/shared/shared'
 import UserProfilEdition from './pages/user/settings/userProfilEdition/UserProfilEdition';
 import reportWebVitals from './reportWebVitals';
 
@@ -18,6 +20,14 @@ const documentView = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+  },
+  {
+    path: "/fichiers",
+    element: <Files />,
+  },
+  {
+    path: "/partages",
+    element: <Shared />,
   },
   {
     path: "/monCompte",
