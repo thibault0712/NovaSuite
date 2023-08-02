@@ -12,6 +12,8 @@ import { HandlleRemoveElement } from './handleClick/handleRemoveElement';
 import {GetUseInformation} from './resquest/getUserInformation'
 import { PopupUserInformations } from './hooks/popupUserInformations';
 import { Link } from 'react-router-dom';
+import { DateTransform } from './components/dateTransform';
+import Avatar from 'react-avatar';
 
 function Files() {
   const navigate = useNavigate();
@@ -118,9 +120,9 @@ function Files() {
             <h2 className="text-xl font-semibold text-black dark:text-white">Documents</h2>
           </div>
           <ul className="">
-            {elements.map((element) => (
+          {elements.map((element) => (
               <div key={element.id}
-                onClick={() => {isOpen === false && HandleOpen(navigate, element.data.type, element.id)}}
+                onClick={() => {isOpen === false && HandleOpen(navigate, element.data.type, element.id, userData.userName)}}
                 className="flex items-center w-full cursor-pointer hover:bg-white/40 hover:dark:bg-gray-800/40 bg-white dark:bg-gray-900/5 px-4 py-2 border-b border-b-slate-500/30"
               >
                 <img
@@ -133,6 +135,16 @@ function Files() {
                     {element.data.title}
                   </p>
                 </div>
+                <div className="flex-grow ml-2">
+                  <Avatar round size='30' name={element.data.lastEditionUser} textSizeRatio={3} />
+                </div>
+                {isMobile === false &&
+                  <div className="flex-grow ml-2">
+                    <p className="text-gray-800 dark:text-white text-left text-sm font-semibold">
+                      {DateTransform(element.data.date.toDate())}
+                    </p>
+                  </div>
+                }
                 <Popup
                   trigger={<button className="flex-none mr-3 px-2 py-2 text-gray-500 hover:text-gray-700 flex items-center whitespace-nowrap">
                     <MdOutlineDriveFileRenameOutline />

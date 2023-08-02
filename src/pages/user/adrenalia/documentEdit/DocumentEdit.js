@@ -106,7 +106,7 @@ function DocumentEdit() {
           <span className="font-semibold text-xl tracking-tight">Adrenalia</span>
         </div>
         <div className="flex items-center mr-2">
-          <button onClick={() => setOpen("popupSharing")} className='text-black flex dark:text-white rounded px-2 py-1 bg-blue-700 hover:bg-blue-700/30 dark:bg-purple-700 dark:hover:dark:bg-purple-700/30 mr-4'>
+          <button onClick={() => setOpen("popupSharing")} className='flex text-white rounded px-2 py-1 bg-blue-700 hover:bg-blue-700/30 dark:bg-purple-700 dark:hover:dark:bg-purple-700/30 mr-4'>
             <MdIosShare className='w-5 h-auto text-inherit'/>
             <span className='text-inhertir ml-1 font-semibold text-m'>Partager</span>
           </button>

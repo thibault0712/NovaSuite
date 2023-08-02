@@ -32,7 +32,8 @@ export async function HandleNewAdrenalia(userUID){
         image: "none",
         make: false,
         parents: [],
-        title: "Premier objectif"
+        title: "Premier objectif",
+        position: 1
     });
     const objectiveId = objectiveRef.id
 

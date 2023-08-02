@@ -3,6 +3,8 @@ import Popup from 'reactjs-popup';
 import { handleSetMake } from '../handleClick/handleSetMake';
 import { handleSetNotMake } from '../handleClick/handleSetNotMake';
 import { MdCloudUpload } from "react-icons/md";
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm';
 import './styles/popup.css'
 
 export function PopupObjective(objective, documentId, node, setUpdate, make, lastObjective, blockedNodes, element) {
@@ -48,14 +50,16 @@ export function PopupObjective(objective, documentId, node, setUpdate, make, las
                 </div>
               </div>
             }
-            <div className="content pb-3 mx-5 mt-4 text-justify">
-              <div>
-                <p className=' text-black dark:text-white text-sm tracking-wide font-medium mb-2'>Description</p>
+              <div className="content pb-3 mx-5 mt-4 text-justify">
+                <div>
+                  <p className='text-black dark:text-white text-sm tracking-wide font-medium mb-2'>Description</p>
+                </div>
+                <div className='shadow-inner bg-slate-300/40 dark:bg-gray-600/50 rounded p-3' style={{minHeight: 100}}>
+                    <div className="prose prose-h1:text-center dark:prose-headings:text-white dark:prose-p:text-white dark:prose-a:text-white dark:prose-strong:text-white dark:prose-blockquote:text-white">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]} className='dark:text-white'>{objective.content}</ReactMarkdown>
+                    </div>
+                </div>
               </div>
-              <div className='shadow-inner bg-slate-300/40 dark:bg-gray-600/50 rounded p-3' style={{minHeight: 100}}>
-                <p className='text-black dark:text-white text-sm'>{objective.content}</p>
-              </div>
-            </div>
             <div className="pt-1 flex justify-end mr-5">
               {
                 objective.make === true && 
