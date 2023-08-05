@@ -10,7 +10,8 @@ import { MdCloudUpload, MdDelete } from "react-icons/md";
 
 
 
-export function PopupObjective(objective, documentId, node, setUpdate, make, lastObjective, objectives, formData, setFormData, element) {
+export function PopupObjective(objective, documentId, node, make, lastObjective, objectives, formData, setFormData, element) {
+  
   var File;
   const handleChange = (e) => {
     if (e.target.name === "title" && e.target.value.length <= 31){
@@ -79,7 +80,7 @@ export function PopupObjective(objective, documentId, node, setUpdate, make, las
             <div className="content pb-3 mx-5 mt-4 text-justify">
               <div className='flex mb-2'>
                 <p className=' text-black dark:text-white text-sm tracking-wide font-medium'>Image</p>
-                <button className='ml-2'onClick={() => HandleDeletImage(documentId, node, objective, setUpdate, element)} ><MdDelete className='text-red-500 h-full w-auto'/></button>
+                <button className='ml-2'onClick={() => HandleDeletImage(documentId, node, objective, element)} ><MdDelete className='text-red-500 h-full w-auto'/></button>
               </div>
                 <div className="pl-3">
                   <img src={objective.image} className='h-auto max-w-full shadow-inner rounded m-4' alt="..." style={{margin: "0 auto"}}></img>
@@ -110,9 +111,9 @@ export function PopupObjective(objective, documentId, node, setUpdate, make, las
           <div className="pt-1 flex justify-end mr-5">
 
             {(objective.parents.length !== 0 || objectives[node.node -1]?.filter(objective => objective.parents.length === 0).length > 1) &&
-              <button onClick={ async () => {HandleDeletObjective(documentId, node, objective, lastObjective, setUpdate, objectives, element)}} className="bg-red-700 hover:bg-red-600 w-30 text-white font-bold py-2 px-4 rounded mr-5"> Supprimer </button>
+              <button onClick={ async () => {HandleDeletObjective(documentId, node, objective, lastObjective, objectives, element)}} className="bg-red-700 hover:bg-red-600 w-30 text-white font-bold py-2 px-4 rounded mr-5"> Supprimer </button>
             }
-            <button onClick={ async () => {await HandleEditObjective(documentId, node, objective, formData.title, formData.content, setUpdate, File, element); close()}} className="bg-green-700 hover:bg-green-600 w-30 text-white font-bold py-2 px-4 rounded">Sauvegarder</button>
+            <button onClick={ async () => {await HandleEditObjective(documentId, node, objective, formData.title, formData.content, File, element); close()}} className="bg-green-700 hover:bg-green-600 w-30 text-white font-bold py-2 px-4 rounded">Sauvegarder</button>
           </div>
         </div>
       )}
@@ -154,7 +155,7 @@ export function PopupObjective(objective, documentId, node, setUpdate, make, las
                 </div>
               </div>
               <div className="pt-4 flex justify-end mr-5">
-                <button onClick={async() => {await HandleNewObjective(documentId, node, objective, formData.title, formData.content, setUpdate, File, element, objective.position, objectives); close()}} className="bg-green-500 w-30 text-white font-bold py-2 px-4 rounded">Créer</button>
+                <button onClick={async() => {await HandleNewObjective(documentId, node, objective, formData.title, formData.content, File, element, objective.position, objectives); close()}} className="bg-green-500 w-30 text-white font-bold py-2 px-4 rounded">Créer</button>
               </div>
             </div>
           )}
@@ -197,7 +198,7 @@ export function PopupObjective(objective, documentId, node, setUpdate, make, las
               </div>
             </div>
             <div className="pt-4 flex justify-end mr-5">
-              <button onClick={async() => {await HandleNewObjective(documentId, node, objective, formData.title, formData.content, setUpdate, File, element); close()}} className="bg-green-500 w-30 text-white font-bold py-2 px-4 rounded">Créer</button>
+              <button onClick={async() => {await HandleNewObjective(documentId, node, objective, formData.title, formData.content, File, element); close()}} className="bg-green-500 w-30 text-white font-bold py-2 px-4 rounded">Créer</button>
             </div>
           </div>
         )}

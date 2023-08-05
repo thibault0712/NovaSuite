@@ -1,7 +1,7 @@
 import { collection, addDoc, doc, updateDoc} from 'firebase/firestore';
 import { db } from '../../../../../data/firebase';
 
-export async function HandleNewNode (selectedDocument, node, setUpdate, documents, nodes, element) {
+export async function HandleNewNode (selectedDocument, node, documents, nodes, element) {
 
   const docRefNode = await addDoc(collection(db, "elements", element, "documents", documents[selectedDocument].id, "nodes"), {
       node: node + 2, //Dans mes nodes je commence à 1 donc +2
@@ -38,6 +38,4 @@ export async function HandleNewNode (selectedDocument, node, setUpdate, document
     })
 
     window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
-
-    setUpdate(nodeId);
   }

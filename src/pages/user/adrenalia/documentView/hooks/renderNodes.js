@@ -1,6 +1,6 @@
 import { RenderObjectives } from "./renderObjectives";
 
-export function RenderNodes(nodes, objectives, documents, selectedDocument, setUpdate, blockedNodes, element) {
+export function RenderNodes(nodes, objectives, documents, selectedDocument, blockedNodes, element) {
     return nodes
         ?.sort((a, b) => a.node - b.node)
         .map((node, i) => {
@@ -24,7 +24,7 @@ export function RenderNodes(nodes, objectives, documents, selectedDocument, setU
                     objectives[i]?.filter(objective => objective.parents.length === 0)
                         .sort((a, b) => a.position - b.position)
                         .map(objective => {
-                            return RenderObjectives(node, objective, 0, i, "bg-gray-200 dark:bg-gray-900", objectives, documents, selectedDocument, setUpdate, blockedNodes, element);
+                                return RenderObjectives(node, objective, 0, i, "bg-gray-200 dark:bg-gray-900", objectives, documents, selectedDocument, blockedNodes, element);
                         })
                     }
                     </div>
@@ -50,7 +50,11 @@ export function RenderNodes(nodes, objectives, documents, selectedDocument, setU
                     objectives[i]?.filter(objective => objective.parents.length === 0)
                         .sort((a, b) => a.position - b.position)
                         .map(objective => {
-                            return RenderObjectives(node, objective, 0, i, "bg-gray-50 dark:bg-gray-900", objectives, documents, selectedDocument, setUpdate, blockedNodes, element);
+                            try {
+                                return RenderObjectives(node, objective, 0, i, "bg-gray-50 dark:bg-gray-900", objectives, documents, selectedDocument, blockedNodes, element);
+                            }catch(e) {
+                                return(e)
+                            }
                         })
                     }
                     </div>

@@ -2,7 +2,7 @@ import { collection, addDoc, doc, updateDoc, arrayUnion } from 'firebase/firesto
 import { db } from '../../../../../data/firebase';
 import {ref, getStorage, uploadBytesResumable, getDownloadURL } from "firebase/storage"
 
-export async function HandleNewObjective (documentId, node, objective, title, content, setUpdate, Path, element, position, objectives) {
+export async function HandleNewObjective (documentId, node, objective, title, content, Path, element, position, objectives) {
   var path = "none"
   if (Path){
     path= "treatment"
@@ -85,11 +85,9 @@ export async function HandleNewObjective (documentId, node, objective, title, co
             await updateDoc(objectiveRef, {
               image: downloadURL
             });
-            setUpdate(downloadURL); // On doit mettre à jour pour rendre l'image visible
           });
         }
       );
     }
 
-    setUpdate(updatedChildrens);
   }

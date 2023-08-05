@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { GetNodes } from './request/getNodes';
-import { GetObjectives } from './request/getObjectives';
-import { GetDocuments } from './request/getDocuments';
 import { RenderDocumentsButtons } from './hooks/renderDocumentsButtons';
 import { RenderNodes } from './hooks/renderNodes';
 import { MdIosShare, MdModeEdit } from 'react-icons/md'
@@ -13,6 +10,9 @@ import { PopupSharing } from './hooks/popupSharing';
 import { Store, ReactNotifications } from 'react-notifications-component';
 import { PopupUserInformations } from './hooks/popupUserInformations';
 import { GetUseInformation } from './request/getUserInformation';
+import { SynchronizationDocuments } from './synchronization/synchronizationDocuments';
+import { SynchronizationNodes } from './synchronization/synshronizationNodes';
+import { SynchronizationObjectives } from './synchronization/synchronizationObjectives';
 
 function DocumentView() {
   const navigate = useNavigate();
@@ -22,7 +22,6 @@ function DocumentView() {
   const [selectedDocument, setSelectedDocument] = useState(0);
   const [nodes, setNodes] = useState();
   const [objectives, setObjectives] = useState([]);
-  const [update, setUpdate] = useState();
   const [blockedNodes, setBlockedNodes] = useState();
   const [element, setElement] = useState();
   const [open, setOpen] = useState();
@@ -46,32 +45,13 @@ function DocumentView() {
         GetUseInformation(setUserData, user.uid)
         setElement(element)
       });
-        GetDocuments(element).then((documents) => {
-          setDocuments(documents);
-          const sortDocuments = [...documents].sort((a, b) => a.position - b.position);
 
-        GetNodes(sortDocuments[parseInt(selectedDocument)].id, element).then((result, i) => {
-          const sortedResult = result.sort((a, b) => a.node - b.node);
-          setNodes(sortedResult);
-          var dataBlockedNode = 0;
-          sortedResult.map((node, key) => {
-            if (node.objectives !== node.resolvedObjectives && dataBlockedNode === 0) {
-              dataBlockedNode = key + 1;
-            }
-            return null;
-          });
-          setBlockedNodes(dataBlockedNode);
-          GetObjectives(sortDocuments[parseInt(selectedDocument)].id, sortedResult, element).then((result) => {
-            setObjectives(result);
-          });
-        });
-      });
       } catch (error) {
         console.error('Erreur lors de la récupération des documents:', error);
         navigate('/')
       }
     console.log("refresh");
-  }, [selectedDocument, update, authentication, navigate, location.search]);
+  }, [ authentication, navigate, location.search]);
 
   useEffect(() => {
     if (showSuccessNotif === true){
@@ -91,6 +71,10 @@ function DocumentView() {
       setShowSuccessNotif(false)
     }
   }, [showSuccessNotif])
+
+  SynchronizationDocuments(setDocuments);
+  SynchronizationNodes(setNodes, selectedDocument, documents, setBlockedNodes);
+  SynchronizationObjectives(selectedDocument, documents, objectives, setObjectives)
 
   return (
     <div>
@@ -121,7 +105,7 @@ function DocumentView() {
       </div>
 
       <div className="overflow-x-auto">
-        {RenderNodes(nodes, objectives, documents, selectedDocument, setUpdate, blockedNodes, element)}         
+        {RenderNodes(nodes, objectives, documents, selectedDocument, blockedNodes, element)}         
       </div>
     </div>
   );

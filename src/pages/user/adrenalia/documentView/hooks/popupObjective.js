@@ -7,7 +7,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm';
 import './styles/popup.css'
 
-export function PopupObjective(objective, documentId, node, setUpdate, make, lastObjective, blockedNodes, element) {
+export function PopupObjective(objective, documentId, node, make, lastObjective, blockedNodes, element) {
   return (
     <div className='relative flex items-center mb-16'>
       <Popup
@@ -63,12 +63,12 @@ export function PopupObjective(objective, documentId, node, setUpdate, make, las
             <div className="pt-1 flex justify-end mr-5">
               {
                 objective.make === true && 
-                <button onClick={ async () => { await handleSetNotMake(objective.id, documentId, node, setUpdate, element); close()}} className="bg-red-700 hover:bg-red-600 w-30 text-white font-bold py-2 px-4 rounded">Bloquer</button>
+                <button onClick={ async () => { await handleSetNotMake(objective.id, documentId, node, element); close()}} className="bg-red-700 hover:bg-red-600 w-30 text-white font-bold py-2 px-4 rounded">Bloquer</button>
                 //await pour attendre que handleSetNotMake soit fini avant de close permet d'avoir une animation plus jolie
               }
               {
                 objective.make === false && ((node &&  blockedNodes > node.node - 1 && !lastObjective) || (lastObjective && lastObjective.make === true)) &&
-                  <button onClick={async () =>  { await handleSetMake(objective.id, documentId, node, setUpdate, element); close()}} className="bg-green-700 hover:bg-green-600 w-30 text-white font-bold py-2 px-4 rounded">Débloquer</button>
+                  <button onClick={async () =>  { await handleSetMake(objective.id, documentId, node, element); close()}} className="bg-green-700 hover:bg-green-600 w-30 text-white font-bold py-2 px-4 rounded">Débloquer</button>
                   //await pour attendre que handleSetNotMake soit fini avant de close permet d'avoir une animation plus jolie
               }
               {

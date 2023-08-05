@@ -11,7 +11,7 @@ function getFileNameFromURL(url) {
   return fileName;
 }
 
-export async function HandleDeletObjective (documentId, node, objective, lastObjective, setUpdate, objectives, element) {
+export async function HandleDeletObjective (documentId, node, objective, lastObjective, objectives, element) {
     var deletedElements = 1;
     let lastObjectiveChildrens;
     const position = objective.position;
@@ -69,6 +69,4 @@ export async function HandleDeletObjective (documentId, node, objective, lastObj
   await updateDoc(NodeRef, {
     objectives: node.objectives - deletedElements
   });
-
-  setUpdate(objective.id);
 }

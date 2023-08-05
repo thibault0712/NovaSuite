@@ -2,7 +2,7 @@ import Popup from "reactjs-popup";
 import './styles/popup.css'
 import { HandleDeletDocument } from "../handleClick/handleDeletDocument";
 
-export function PopupRemoveDocument(setOpen, selectedDocument, setUpdate, documents, setSelectedDocument, nodes, objectives, element){
+export function PopupRemoveDocument(setOpen, selectedDocument, documents, setSelectedDocument, nodes, objectives, element){
   return(
     <Popup
       open={true}
@@ -18,7 +18,7 @@ export function PopupRemoveDocument(setOpen, selectedDocument, setUpdate, docume
           <div className="pt-4 flex justify-end mr-5">
             <div style={{margin: '0 auto'}}>
                 <button onClick={() => close()} className="bg-green-500 w-30 text-white font-bold py-2 px-4 rounded mr-5">Annuler</button>
-                {documents.length > 1 && <button onClick={() => {HandleDeletDocument(selectedDocument, setUpdate, documents, setSelectedDocument, nodes, objectives, element); close()}} className="bg-red-500 w-30 text-white font-bold py-2 px-4 rounded">Confirmer</button>}
+                {documents.length > 1 && <button onClick={() => {HandleDeletDocument(selectedDocument, documents, setSelectedDocument, nodes, objectives, element); close()}} className="bg-red-500 w-30 text-white font-bold py-2 px-4 rounded">Confirmer</button>}
                 {documents.length === 1 && <button className="bg-red-800/80 w-30 text-white font-bold py-2 px-4 rounded cursor-not-allowed">Confirmer</button>}
             </div>
 

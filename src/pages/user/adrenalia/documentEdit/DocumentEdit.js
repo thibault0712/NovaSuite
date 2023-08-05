@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { MdRemoveRedEye } from 'react-icons/md';
-import { GetNodes } from './request/getNodes';
-import { GetObjectives } from './request/getObjectives';
-import { GetDocuments } from './request/getDocuments';
 import { RenderDocumentsButtons } from './hooks/renderDocumentsButtons';
 import { RenderNodes } from './hooks/renderNodes';
 import { HandleNewDocument } from './handleClick/handleNewDocument';
@@ -15,6 +12,9 @@ import { MdIosShare } from 'react-icons/md';
 import { Store, ReactNotifications } from 'react-notifications-component';
 import { GetUseInformation } from './request/getUserInformation';
 import { PopupUserInformations } from './hooks/popupUserInformations';
+import { SynchronizationObjectives } from './synchronization/synchronizationObjectives';
+import {SynchronizationDocuments} from './synchronization/synchronizationDocuments'
+import { SynchronizationNodes } from './synchronization/synshronizationNodes';
 
 function DocumentEdit() {
   const navigate = useNavigate();
@@ -24,7 +24,6 @@ function DocumentEdit() {
   const [selectedDocument, setSelectedDocument] = useState(0);
   const [nodes, setNodes] = useState();
   const [objectives, setObjectives] = useState([]);
-  const [update, setUpdate] = useState();
   const [blockedNodes, setBlockedNodes] = useState();
   const [formData, setFormData] = useState({title: '', content: ''});
   const [file, setFile] = useState("");
@@ -50,32 +49,17 @@ function DocumentEdit() {
         VerificationIfOpenable(element, user.uid, navigate);
         setElement(element)
       });
-      GetDocuments(element).then((documents) => {
-        setDocuments(documents);
-        const sortDocuments = [...documents].sort((a, b) => a.position - b.position);
 
-        GetNodes(sortDocuments[parseInt(selectedDocument)].id, element).then((result, i) => {
-          const sortedResult = result.sort((a, b) => a.node - b.node);
-          setNodes(sortedResult);
-          var dataBlockedNode = 0;
-          sortedResult.map((node, key) => {
-            if (node.objectives !== node.resolvedObjectives && dataBlockedNode === 0) {
-              dataBlockedNode = key + 1;
-            }
-            return null;
-          });
-          setBlockedNodes(dataBlockedNode);
-          GetObjectives(sortDocuments[parseInt(selectedDocument)].id, sortedResult, element).then((result) => {
-            setObjectives(result);
-          });
-        });
-      });
       } catch (error) {
         console.error('Erreur lors de la récupération des documents:', error);
       }
 
     console.log("refresh");
-  }, [selectedDocument, update, authentication, location.search, navigate]);
+  }, [authentication, location.search, navigate]);
+
+  SynchronizationDocuments(setDocuments);
+  SynchronizationNodes(setNodes, selectedDocument, documents, setBlockedNodes);
+  SynchronizationObjectives(selectedDocument, documents, objectives, setObjectives)
 
   useEffect(() => {
     if (showSuccessNotif === true){
@@ -115,10 +99,10 @@ function DocumentEdit() {
       </header>
       <div className='flex sticky top-14 z-50 border-t border-b border-t-slate-700/50 dark:border-t-slate-500/30 border-b-slate-700/50 dark:border-b-slate-500/30 bg-gray-50 dark:bg-gray-900'>
         <div className="flex text-slate-400 text-xs leading-6 overflow-x-auto scrollbar-none">
-          {RenderDocumentsButtons(documents, selectedDocument, setSelectedDocument, open, setOpen, setUpdate, formData, setFormData, nodes, objectives, element)}
+          {RenderDocumentsButtons(documents, selectedDocument, setSelectedDocument, open, setOpen, formData, setFormData, nodes, objectives, element)}
         </div>
         <div className='flex items-end ml-auto'>
-          <button onClick={() => HandleNewDocument(documents, setDocuments, element, setSelectedDocument, setUpdate)} className="flex-none text-slate-700 dark:text-gray-400 font-bold border-l border-l-slate-700/50 dark:border-l-slate-500/30 px-3 py-1 flex items-center h-full">+</button>
+          <button onClick={() => HandleNewDocument(documents, element, setSelectedDocument)} className="flex-none text-slate-700 dark:text-gray-400 font-bold border-l border-l-slate-700/50 dark:border-l-slate-500/30 px-3 py-1 flex items-center h-full">+</button>
           <Link className="h-full" to={'/adrenalia/view?element=' + element}>
             <button className="flex-none text-slate-700 dark:text-gray-400 font-bold border-l border-l-slate-700/50 dark:border-l-slate-500/30 px-3 py-1 flex items-center h-full"><MdRemoveRedEye /></button>
           </Link>
@@ -126,7 +110,7 @@ function DocumentEdit() {
       </div>
 
       <div className="overflow-x-auto">
-        {RenderNodes(nodes, objectives, documents, selectedDocument, setUpdate, blockedNodes, formData, setFormData, setFile, file, element)}         
+        {RenderNodes(nodes, objectives, documents, selectedDocument, blockedNodes, formData, setFormData, setFile, file, element)}         
       </div>
     </div>
   );

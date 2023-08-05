@@ -1,14 +1,13 @@
 import { collection, addDoc, doc, updateDoc} from 'firebase/firestore';
 import { db } from '../../../../../data/firebase';
 
-export async function HandleNewDocument (documents, setDocuments, element, setSelectedDocument, setUpdate){
+export async function HandleNewDocument (documents, element, setSelectedDocument){
     const newDocumentNumber = documents.length + 1
     const docRefDocument = await addDoc(collection(db, "elements", element, "documents"), {
       title: "Document " + (newDocumentNumber - 1), //-1 car il y a un décalage entre le titre et la position
       position: newDocumentNumber,
     });
     const docId = docRefDocument.id
-    setDocuments(current => [...current, { id: docId, title: "Document " + newDocumentNumber }]);
 
     const docRefNode = await addDoc(collection(db, "elements", element, "documents", docId, "nodes"), {
       node: 1,
@@ -35,5 +34,4 @@ export async function HandleNewDocument (documents, setDocuments, element, setSe
       });
 
     setSelectedDocument(newDocumentNumber - 1);
-    setUpdate(docObjectiveId);
   }

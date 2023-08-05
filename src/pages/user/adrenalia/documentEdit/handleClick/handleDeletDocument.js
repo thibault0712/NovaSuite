@@ -1,7 +1,7 @@
 import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../../../../../data/firebase';
 
-export async function HandleDeletDocument (selectedDocument, setUpdate, documents, setSelectedDocument, nodes, objectives, element) {
+export async function HandleDeletDocument (selectedDocument, documents, setSelectedDocument, nodes, objectives, element) {
   const docId = documents[selectedDocument].id;
 
   nodes.map(async(node) => {
@@ -24,5 +24,4 @@ export async function HandleDeletDocument (selectedDocument, setUpdate, document
    if (documents.length - 1 === selectedDocument){
     setSelectedDocument(selectedDocument - 1)
    }
-   setUpdate(docId);
 }

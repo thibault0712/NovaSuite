@@ -5,7 +5,7 @@ import { PopupEditTitleDocument } from "./popupEditTitleDocument";
 import { PopupRemoveDocument } from "./popupRemoveDocument";
 import { useRef } from "react";
 
-export function RenderDocumentsButtons(documents, selectedDocument, setSelectedDocument, open, setOpen, setUpdate, formData, setFormData, nodes, objectives, element) {
+export function RenderDocumentsButtons(documents, selectedDocument, setSelectedDocument, open, setOpen, formData, setFormData, nodes, objectives, element) {
     const ref = useRef()
     const closeModal = () =>  ref.current.close();
     return  documents
@@ -13,8 +13,8 @@ export function RenderDocumentsButtons(documents, selectedDocument, setSelectedD
       .map((document, i) => {
         return (
           <div key={i}>
-            {open === "editDocumentTitle" && i === 0 && PopupEditTitleDocument(setOpen, formData, setFormData, selectedDocument, documents, setUpdate, element)}
-            {open === "removeDocument" && i === 0 && PopupRemoveDocument(setOpen, selectedDocument, setUpdate, documents, setSelectedDocument, nodes, objectives, element)}
+            {open === "editDocumentTitle" && i === 0 && PopupEditTitleDocument(setOpen, formData, setFormData, selectedDocument, documents, element)}
+            {open === "removeDocument" && i === 0 && PopupRemoveDocument(setOpen, selectedDocument, documents, setSelectedDocument, nodes, objectives, element)}
             {parseInt(selectedDocument) === i && (
               <div className="flex">
                 <button className="flex-none border-t border-b dark:border-b-slate-700 border-t-blue-400 dark:border-t-sky-300 text-blue-400 dark:text-sky-300 dark:border-r-slate-500/30 pl-4 py-1 flex items-center whitespace-nowrap">

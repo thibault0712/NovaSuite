@@ -1,6 +1,6 @@
 import {getDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../../../data/firebase';
-export async function handleSetNotMake(objectiveId, documentId, node, setUpdate, element) {
+export async function handleSetNotMake(objectiveId, documentId, node, element) {
     const nodeRef = doc(db, "elements", element, "documents", documentId, "nodes", node.id);
     const nodeSnapshot = await getDoc(nodeRef);
     const currentResolvedObjectives = nodeSnapshot.data().resolvedObjectives || 0;
@@ -14,5 +14,4 @@ export async function handleSetNotMake(objectiveId, documentId, node, setUpdate,
     await updateDoc(objectiveRef, {
       make: false
     });
-    setUpdate(updatedResolvedObjectives); //Je met cette valeur là car il faut une valeur qui change à chaque fois qu'on appuie sur le bouton poour forcer un update du useEffect
 }

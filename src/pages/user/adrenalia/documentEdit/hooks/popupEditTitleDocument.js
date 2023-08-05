@@ -2,7 +2,7 @@ import Popup from "reactjs-popup";
 import './styles/popup.css'
 import { HandleRenameDocument } from "../handleClick/handleRenameDocument";
 
-export function PopupEditTitleDocument(setOpen, formData, setFormData, selectedDocument, documents, setUpdate, element){
+export function PopupEditTitleDocument(setOpen, formData, setFormData, selectedDocument, documents, element){
   
   if (documents[selectedDocument].id !== formData.documentId ){
     setFormData({title: documents[selectedDocument].title, documentId: documents[selectedDocument].id})
@@ -40,7 +40,7 @@ export function PopupEditTitleDocument(setOpen, formData, setFormData, selectedD
           </div>
           <div className="pt-4 flex justify-end mr-5">
             <button className="bg-red-500 w-30 text-white font-bold py-2 px-4 rounded mr-5" onClick={() => {close()}}>Annuler</button>
-            <button className="bg-green-500 w-30 text-white font-bold py-2 px-4 rounded" onClick={() => {HandleRenameDocument(selectedDocument, setUpdate, documents, formData.title, element); close()}}>Sauvegarder</button>
+            <button className="bg-green-500 w-30 text-white font-bold py-2 px-4 rounded" onClick={() => {HandleRenameDocument(selectedDocument, documents, formData.title, element); close()}}>Sauvegarder</button>
           </div>
         </div>
       )}

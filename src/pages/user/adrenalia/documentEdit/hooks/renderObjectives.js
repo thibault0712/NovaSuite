@@ -3,10 +3,16 @@ import { FindObjectiveById } from "../components/findObjectiveById";
 import './styles/arrow.css'
 import Xarrow from "react-xarrows";
 
-export function RenderObjectives (node, objective, level, i, color, objectives, documents, selectedDocument, setUpdate, blockedNodes, formData, setFormData, setFile, file, element, numberChild, lastObjective){
+export function RenderObjectives (node, objective, level, i, color, objectives, documents, selectedDocument, blockedNodes, formData, setFormData, setFile, file, element, numberChild, lastObjective){
+    if (!objective || (level !== 0 && !lastObjective) || !documents[selectedDocument] || !node){
+      return
+    }
+
+
+  
     return (
       <div key={objective.id} className={`relative ${objective.parents.length === 0 ? "mr-10" : ""}`}>
-        {PopupObjective(objective, documents[selectedDocument].id, node, setUpdate, objective.make, lastObjective, objectives, formData, setFormData, element)}
+        {PopupObjective(objective, documents[selectedDocument].id, node, objective.make, lastObjective, objectives, formData, setFormData, element)}
         {level !== 0 &&(
             <Xarrow
             start={lastObjective.id} //can be react ref
@@ -25,7 +31,7 @@ export function RenderObjectives (node, objective, level, i, color, objectives, 
 
         {objective.childrens && (
           <div className="flex row-auto">
-            {objective.childrens.map((child, numberChild) => RenderObjectives(node, FindObjectiveById(child, i, objectives), level + 1, i, color, objectives, documents, selectedDocument, setUpdate, blockedNodes, formData, setFormData, setFile, file, element, numberChild, objective))}
+            {objective.childrens.map((child, numberChild) => RenderObjectives(node, FindObjectiveById(child, i, objectives), level + 1, i, color, objectives, documents, selectedDocument, blockedNodes, formData, setFormData, setFile, file, element, numberChild, objective))}
           </div>
         )}
 

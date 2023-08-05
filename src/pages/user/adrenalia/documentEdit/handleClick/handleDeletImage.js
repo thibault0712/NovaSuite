@@ -10,7 +10,7 @@ function getFileNameFromURL(url) {
   return fileName;
 }
 
-export async function HandleDeletImage (documentId, node, objective, setUpdate, element) {
+export async function HandleDeletImage (documentId, node, objective, element) {
   const objectiveRef = doc(db, "elements", element, "documents", documentId, "nodes", node.id, "objectives", objective.id);
   await updateDoc(objectiveRef, {
     image: "none"
@@ -24,6 +24,4 @@ export async function HandleDeletImage (documentId, node, objective, setUpdate, 
   }).catch((error) => {
     // Uh-oh, an error occurred!
   });
-
-  setUpdate(fileName);
 }

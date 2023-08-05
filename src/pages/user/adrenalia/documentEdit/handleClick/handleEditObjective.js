@@ -2,7 +2,7 @@ import { doc, updateDoc } from 'firebase/firestore';
 import {ref, getStorage, uploadBytesResumable, getDownloadURL } from "firebase/storage"
 import { db } from '../../../../../data/firebase';
 
-export async function HandleEditObjective (documentId, node, objective, title, content, setUpdate, Path, element) {
+export async function HandleEditObjective (documentId, node, objective, title, content, Path, element) {
     var path = "none"
     if (Path){
       path = "treatment"
@@ -33,11 +33,8 @@ export async function HandleEditObjective (documentId, node, objective, title, c
             await updateDoc(objectiveRef, {
               image: downloadURL
             });
-            setUpdate(downloadURL); // On doit mettre à jour pour rendre l'image visible
           });
         }
       );
     }
-
-    setUpdate(title + content);
   }

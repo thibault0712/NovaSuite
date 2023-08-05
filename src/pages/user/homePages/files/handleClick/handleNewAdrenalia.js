@@ -2,13 +2,14 @@ import { collection, doc, addDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../../data/firebase";
 import { serverTimestamp } from 'firebase/firestore';
 
-export async function HandleNewAdrenalia(userUID){
+export async function HandleNewAdrenalia(userUID, userName){
     // Add a new document with a generated id.
     const elementRef = await addDoc(collection(db, "elements"), {
         type: "Adrenalia",
         title: "Adrenalia",
         owner: userUID,
         date: serverTimestamp(),
+        lastEditionUser: userName,
         shared: []
     });
     const elementId = elementRef.id
@@ -32,7 +33,8 @@ export async function HandleNewAdrenalia(userUID){
         image: "none",
         make: false,
         parents: [],
-        title: "Premier objectif"
+        title: "Premier objectif",
+        position: 1
     });
     const objectiveId = objectiveRef.id
 

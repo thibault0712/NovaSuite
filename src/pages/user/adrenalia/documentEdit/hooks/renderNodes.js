@@ -3,7 +3,7 @@ import { HandleNewNode } from "../handleClick/handleNewNode";
 import { MdAdd, MdDelete } from 'react-icons/md'
 import { HandleDeletNode } from "../handleClick/handleDeletNode";
 
-export function RenderNodes(nodes, objectives, documents, selectedDocument, setUpdate, blockedNodes, formData, setFormData, setFile, file, element) {
+export function RenderNodes(nodes, objectives, documents, selectedDocument, blockedNodes, formData, setFormData, setFile, file, element) {
     return (<div>
         {nodes
         ?.sort((a, b) => a.node - b.node)
@@ -21,9 +21,9 @@ export function RenderNodes(nodes, objectives, documents, selectedDocument, setU
                             <p className="dark:text-blue-100 text-black text-sm text-center mb-11">{node.resolvedObjectives}/{node.objectives}</p>
                             </div>
                             <div className="flex-col mb-5 flex items-center justify-center">
-                                <button onClick={() => HandleNewNode(selectedDocument, i, setUpdate, documents, nodes, element)} className="mb-5 rounded-full py-1 px-1 dark:bg-gray-600 dark:hover:bg-gray-600/80 border-2 border-black dark:border-white shadow-inherit"><MdAdd className="text-dark dark:text-white"/></button>
+                                <button onClick={() => HandleNewNode(selectedDocument, i, documents, nodes, element)} className="mb-5 rounded-full py-1 px-1 dark:bg-gray-600 dark:hover:bg-gray-600/80 border-2 border-black dark:border-white shadow-inherit"><MdAdd className="text-dark dark:text-white"/></button>
                                 {node.node > 1 &&
-                                    <button onClick={() => HandleDeletNode(selectedDocument, node, setUpdate, documents, nodes, objectives, element)} className="mb-5 rounded-full py-1 px-1 dark:bg-gray-600 dark:hover:bg-gray-600/80 border-2 border-red-400 shadow-inherit"><MdDelete className=" text-red-400"/></button>
+                                    <button onClick={() => HandleDeletNode(selectedDocument, node, documents, nodes, objectives, element)} className="mb-5 rounded-full py-1 px-1 dark:bg-gray-600 dark:hover:bg-gray-600/80 border-2 border-red-400 shadow-inherit"><MdDelete className=" text-red-400"/></button>
                                 } 
                             </div>
                         </div>
@@ -34,7 +34,7 @@ export function RenderNodes(nodes, objectives, documents, selectedDocument, setU
                     objectives[i]?.filter(objective => objective.parents.length === 0)
                         .sort((a, b) => a.position - b.position)
                         .map(objective => {
-                            return RenderObjectives(node, objective, 0, i, "bg-slate-700", objectives, documents, selectedDocument, setUpdate, blockedNodes, formData, setFormData, setFile, file, element);
+                            return RenderObjectives(node, objective, 0, i, "bg-slate-700", objectives, documents, selectedDocument, blockedNodes, formData, setFormData, setFile, file, element);
                         })
                     }
                     </div>
@@ -53,8 +53,8 @@ export function RenderNodes(nodes, objectives, documents, selectedDocument, setU
                                     <p className="dark:text-blue-100 text-black text-sm text-center">{node.resolvedObjectives}/{node.objectives}</p>
                                 </div>
                                 <div className="flex-col mb-5 flex items-center justify-center">
-                                    <button onClick={() => HandleNewNode(selectedDocument, i, setUpdate, documents, nodes, element)} className="mb-5 rounded-full py-1 px-1 dark:bg-gray-600 dark:hover:bg-gray-600/80 border-2 border-black dark:border-white shadow-inherit"><MdAdd className="text-black dark:text-white"/></button>
-                                    <button onClick={() => HandleDeletNode(selectedDocument, node, setUpdate, documents, nodes, objectives, element)} className="mb-5 rounded-full py-1 px-1 dark:bg-gray-600 dark:hover:bg-gray-600/80 border-2 border-red-400 shadow-inherit"><MdDelete className=" text-red-400"/></button>
+                                    <button onClick={() => HandleNewNode(selectedDocument, i, documents, nodes, element)} className="mb-5 rounded-full py-1 px-1 dark:bg-gray-600 dark:hover:bg-gray-600/80 border-2 border-black dark:border-white shadow-inherit"><MdAdd className="text-black dark:text-white"/></button>
+                                    <button onClick={() => HandleDeletNode(selectedDocument, node, documents, nodes, objectives, element)} className="mb-5 rounded-full py-1 px-1 dark:bg-gray-600 dark:hover:bg-gray-600/80 border-2 border-red-400 shadow-inherit"><MdDelete className=" text-red-400"/></button>
                                 </div>
                             </div>
                     </div>
@@ -64,7 +64,7 @@ export function RenderNodes(nodes, objectives, documents, selectedDocument, setU
                     objectives[i]?.filter(objective => objective.parents.length === 0)
                         .sort((a, b) => a.position - b.position)
                         .map(objective => {
-                            return RenderObjectives(node, objective, 0, i, "bg-slate-700", objectives, documents, selectedDocument, setUpdate, blockedNodes, formData, setFormData, setFile, file, element);
+                            return RenderObjectives(node, objective, 0, i, "bg-slate-700", objectives, documents, selectedDocument, blockedNodes, formData, setFormData, setFile, file, element);
                         })
                     }
                     </div>
