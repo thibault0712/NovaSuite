@@ -7,7 +7,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm';
 import './styles/popup.css'
 
-export function PopupObjective(objective, documentId, node, make, lastObjective, blockedNodes, element) {
+export function PopupObjective(objective, documentId, node, make, lastObjective, blockedNodes, element, userData) {
   return (
     <div className='relative flex items-center mb-16'>
       <Popup
@@ -54,7 +54,7 @@ export function PopupObjective(objective, documentId, node, make, lastObjective,
                 <div>
                   <p className='text-black dark:text-white text-sm tracking-wide font-medium mb-2'>Description</p>
                 </div>
-                <div className='shadow-inner bg-slate-300/40 dark:bg-gray-600/50 rounded p-3' style={{minHeight: 100}}>
+                <div className='shadow-inner bg-slate-300/40 dark:bg-gray-600/50 rounded p-3 overflow-x-auto scrollbar-thin scrollbar-track-slate-700/0 scrollbar-thumb-slate-900/50' style={{minHeight: 100}}>
                     <div className="prose prose-h1:text-center dark:prose-headings:text-white dark:prose-p:text-white dark:prose-a:text-white dark:prose-strong:text-white dark:prose-blockquote:text-white">
                       <ReactMarkdown remarkPlugins={[remarkGfm]} className='dark:text-white'>{objective.content}</ReactMarkdown>
                     </div>
@@ -67,12 +67,12 @@ export function PopupObjective(objective, documentId, node, make, lastObjective,
                 //await pour attendre que handleSetNotMake soit fini avant de close permet d'avoir une animation plus jolie
               }
               {
-                objective.make === false && ((node &&  blockedNodes > node.node - 1 && !lastObjective) || (lastObjective && lastObjective.make === true)) &&
+                objective.make === false && ((node &&  blockedNodes > node.node - 1 && !lastObjective) || (lastObjective && lastObjective.make === true)) && userData.permission !== "Lecteur" &&
                   <button onClick={async () =>  { await handleSetMake(objective.id, documentId, node, element); close()}} className="bg-green-700 hover:bg-green-600 w-30 text-white font-bold py-2 px-4 rounded">Débloquer</button>
                   //await pour attendre que handleSetNotMake soit fini avant de close permet d'avoir une animation plus jolie
               }
               {
-                objective.make === false && ((blockedNodes <= node.node - 1) || (lastObjective && lastObjective.make === false)) &&
+                objective.make === false && ((blockedNodes <= node.node - 1) || (lastObjective && lastObjective.make === false) || (userData.permission === "Lecteur")) &&
                   <button className="bg-green-800/50 w-30 text-white font-bold py-2 px-4 rounded cursor-default Disabled">Débloquer</button>
               }
             </div>

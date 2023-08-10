@@ -7,13 +7,15 @@ export async function VerificationIfOpenable(element, userUID, navigate) {
 
   if (docSnap.exists()) {
     const data = docSnap.data();
-
     if (data.owner !== userUID && (!data.shared || !data.shared.includes(userUID))) {
       // Si l'userUID n'est ni le propriétaire, ni dans le tableau partagé
       navigate('/');
     } else {
-      // L'userUID est autorisé à accéder à l'élément
-      // Mettez ici le code pour ouvrir l'élément ou effectuer une autre action en conséquence.
+      if (data.owner !== userUID && data.sharedProperties[userUID].permission !== "Editeur"){
+        navigate("/adrenalia/view?element=" + element)
+      }else{
+        //Utilisateur autorisé
+      }
     }
   } else {
     // Le document n'existe pas dans la collection

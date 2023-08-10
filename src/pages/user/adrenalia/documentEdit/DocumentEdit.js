@@ -15,6 +15,8 @@ import { PopupUserInformations } from './hooks/popupUserInformations';
 import { SynchronizationObjectives } from './synchronization/synchronizationObjectives';
 import {SynchronizationDocuments} from './synchronization/synchronizationDocuments'
 import { SynchronizationNodes } from './synchronization/synshronizationNodes';
+import { GetOwnerInformation } from './request/getOwnerInformations';
+import { GetUsersSharedInformations } from './request/getUsersSharedInformations';
 
 function DocumentEdit() {
   const navigate = useNavigate();
@@ -29,10 +31,12 @@ function DocumentEdit() {
   const [file, setFile] = useState("");
   const [open, setOpen] = useState();
   const [element, setElement] = useState();
-  const [emailFormData, setEmailFormData] = useState([]);
+  const [emailFormData, setEmailFormData] = useState({email: "", permission: "Editeur"});
   const [sharedError, setSharedError] = useState("")
   const [showSuccessNotif, setShowSuccessNotif] = useState(false);
   const [userData, setUserData] = useState([]);
+  const [ownerData, setOwnerData] = useState();
+  const [usersSharedData, setUsersSharedData] = useState([]); //Utiliser dans popupSharing
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -45,16 +49,20 @@ function DocumentEdit() {
         if (element === null){
           navigate('/')
         }
-        GetUseInformation(setUserData, user.uid)
+        GetUseInformation(setUserData, user.uid, element)
         VerificationIfOpenable(element, user.uid, navigate);
+        GetOwnerInformation(setOwnerData, element)
         setElement(element)
+      });
+
+      window.history.pushState(null, null, document.URL);
+      window.addEventListener('popstate', function(event) {
+        navigate('/')
       });
 
       } catch (error) {
         console.error('Erreur lors de la récupération des documents:', error);
       }
-
-    console.log("refresh");
   }, [authentication, location.search, navigate]);
 
   SynchronizationDocuments(setDocuments);
@@ -83,14 +91,14 @@ function DocumentEdit() {
   return (
     <div>
       <ReactNotifications />
-      {open === "popupSharing" && PopupSharing(setOpen, setEmailFormData, emailFormData, element, sharedError, setSharedError, setShowSuccessNotif, setShowSuccessNotif)}
+      {open === "popupSharing" && PopupSharing(setOpen, setEmailFormData, emailFormData, element, sharedError, setSharedError, setShowSuccessNotif, ownerData, usersSharedData, userData, setUsersSharedData)}
       <header className="flex sticky top-0 z-50 items-center justify-between flex-wrap bg-gray-50 dark:bg-gray-900 p-3">
         <div className="flex items-center flex-shrink-0 text-slate-700 dark:text-white mr-6">
           <Link to={'/'}><img className="fill-current h-10 w-10 mr-2" src={require("../../../../data/images/logo.png")} alt="logo"></img></Link>
           <span className="font-semibold text-xl tracking-tight">Adrenalia</span>
         </div>
         <div className="flex items-center mr-2">
-          <button onClick={() => setOpen("popupSharing")} className='flex text-white rounded px-2 py-1 bg-blue-700 hover:bg-blue-700/30 dark:bg-purple-700 dark:hover:dark:bg-purple-700/30 mr-4'>
+          <button onClick={async () => {setUsersSharedData(await GetUsersSharedInformations(element)); setOpen("popupSharing")}} className='flex text-white rounded px-2 py-1 bg-blue-700 hover:bg-blue-700/30 dark:bg-purple-700 dark:hover:dark:bg-purple-700/30 mr-4'>
             <MdIosShare className='w-5 h-auto text-inherit'/>
             <span className='text-inhertir ml-1 font-semibold text-m'>Partager</span>
           </button>

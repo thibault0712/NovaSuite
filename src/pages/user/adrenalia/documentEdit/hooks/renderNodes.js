@@ -28,15 +28,17 @@ export function RenderNodes(nodes, objectives, documents, selectedDocument, bloc
                             </div>
                         </div>
                     </div>
-                    <div className="mb-5 mt-5 relative flex">
-                    {
-                    objectives?.length > 0 &&
-                    objectives[i]?.filter(objective => objective.parents.length === 0)
-                        .sort((a, b) => a.position - b.position)
-                        .map(objective => {
-                            return RenderObjectives(node, objective, 0, i, "bg-slate-700", objectives, documents, selectedDocument, blockedNodes, formData, setFormData, setFile, file, element);
-                        })
-                    }
+                    <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-slate-700/50 scrollbar-track-slate-500/0">
+                        <div className="my-5 flex ">
+                            {
+                            objectives?.length > 0 &&
+                            objectives[i]?.filter(objective => objective.parents.length === 0)
+                                .sort((a, b) => a.position - b.position)
+                                .map(objective => {
+                                    return RenderObjectives(node, objective, 0, i, "bg-slate-700", objectives, documents, selectedDocument, blockedNodes, formData, setFormData, setFile, file, element);
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
                 </div>
@@ -58,15 +60,17 @@ export function RenderNodes(nodes, objectives, documents, selectedDocument, bloc
                                 </div>
                             </div>
                     </div>
-                    <div className="mb-5 mt-5 flex">
-                    {
-                    objectives?.length > 0 &&
-                    objectives[i]?.filter(objective => objective.parents.length === 0)
-                        .sort((a, b) => a.position - b.position)
-                        .map(objective => {
-                            return RenderObjectives(node, objective, 0, i, "bg-slate-700", objectives, documents, selectedDocument, blockedNodes, formData, setFormData, setFile, file, element);
-                        })
-                    }
+                    <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-slate-700/50 scrollbar-track-slate-500/0">
+                        <div className="my-5 flex ">
+                            {
+                            objectives?.length > 0 &&
+                            objectives[i]?.filter(objective => objective.parents.length === 0)
+                                .sort((a, b) => a.position - b.position)
+                                .map(objective => {
+                                    return RenderObjectives(node, objective, 0, i, "bg-slate-700", objectives, documents, selectedDocument, blockedNodes, formData, setFormData, setFile, file, element);
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
                 </div>

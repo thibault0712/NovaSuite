@@ -13,6 +13,7 @@ import {GetUseInformation} from './resquest/getUserInformation'
 import { PopupUserInformations } from './hooks/popupUserInformations';
 import { Link } from 'react-router-dom';
 import { DateTransform } from './components/dateTransform';
+import { Helmet } from 'react-helmet';
 import Avatar from 'react-avatar';
 
 function Files() {
@@ -43,6 +44,11 @@ function Files() {
 
   return (
     <div className="bg-gray-50 dark:bg-gray-900 h-screen ">
+      <Helmet>
+        <title>Mes Fichiers - NovaSuite</title>
+        <meta name="description" content="NovaSuite est une suite d'outils pour faciliter l'organisation au quotidien ou dans la gestion de projets en groupe ou en solo." />
+        <meta name="keywords" content="NovaSuite, outils d'organisation, gestion de fichiers, projet en groupe, projet en solo, Mes fichiers, fichiers" />
+      </Helmet>
       <header className="flex sticky top-0 z-50 items-center justify-between flex-wrap bg-white dark:bg-gray-900 p-3">
         <div className="flex items-center flex-shrink-0 text-white ml-4">
           <img

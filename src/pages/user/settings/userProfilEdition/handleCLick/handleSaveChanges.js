@@ -15,7 +15,10 @@ export async function HandleSaveChanges(formData, firstFormData, userUid, authen
     }
 
     if (firstFormData.email !== formData.email){
-      updateEmail(authentication.currentUser, formData.email).then(() => {
+      updateEmail(authentication.currentUser, formData.email).then(async () => {
+        await updateDoc(doc(db, "users", userUid), {
+          email: formData.email
+        });
         navigate("/")
       }).catch((error) => {
         if (error.code === 'auth/email-already-in-use') {
