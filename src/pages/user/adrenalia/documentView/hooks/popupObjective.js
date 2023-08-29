@@ -62,9 +62,13 @@ export function PopupObjective(objective, documentId, node, make, lastObjective,
               </div>
             <div className="pt-1 flex justify-end mr-5">
               {
-                objective.make === true && 
+                objective.make === true && (userData.permission !== "Lecteur") && 
                 <button onClick={ async () => { await handleSetNotMake(objective.id, documentId, node, element); close()}} className="bg-red-700 hover:bg-red-600 w-30 text-white font-bold py-2 px-4 rounded">Bloquer</button>
                 //await pour attendre que handleSetNotMake soit fini avant de close permet d'avoir une animation plus jolie
+              }
+              {
+                objective.make === true && (userData.permission === "Lecteur") && 
+                  <button className="bg-red-800/50 w-30 text-white font-bold py-2 px-4 rounded cursor-default Disabled">Débloquer</button>
               }
               {
                 objective.make === false && ((node &&  blockedNodes > node.node - 1 && !lastObjective) || (lastObjective && lastObjective.make === true)) && userData.permission !== "Lecteur" &&

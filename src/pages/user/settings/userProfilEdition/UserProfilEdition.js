@@ -104,7 +104,6 @@ function UserProfilEdition() {
                     </h1>
                     <div className='mt-2 mb-3 flex items-center justify-center'>
                       <Avatar round size='70' name={userData.userName} textSizeRatio={3} />
-
                     </div>
                     <div className="space-y-4 md:space-y-6">
                         <div className='flex items-center'>

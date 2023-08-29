@@ -5,9 +5,12 @@ import { MdLogout, MdOutlineSettings, MdPeople } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
 export function PopupUserInformations(userData, navigate, authentication){
+    if (userData.length === 0)
+        return(<div className='h-12 w-12'></div>)
+    else
     return(
         <Popup
-        trigger={<button className="rounded-full h-12 w-12 flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white">
+        trigger={<button className="rounded-full h-12 w-12 flex items-center justify-center text-white">
                     <Avatar round size='50' name={userData.userName} textSizeRatio={3} />
                 </button>}
         modal

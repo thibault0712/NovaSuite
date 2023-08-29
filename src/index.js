@@ -4,6 +4,7 @@ import './styles/style.css';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import DocumentView from './pages/user/adrenalia/documentView/DocumentView';
 import DocumentEdit from './pages/user/adrenalia/documentEdit/DocumentEdit';
+import ScopeGraph from './pages/user/scopeGraph/scopeGraph';
 import Login from './pages/connection/login';
 import Inscription from './pages/connection/inscription';
 import Home from './pages/user/homePages/home/Home';
@@ -44,6 +45,10 @@ const documentView = createBrowserRouter([
   {
     path: "/adrenalia/edition",
     element: <DocumentEdit />,
+  },
+  {
+    path: "/scopegraph",
+    element: <ScopeGraph />,
   },
 ]);
 

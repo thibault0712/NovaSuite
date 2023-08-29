@@ -9,6 +9,12 @@ export async function HandleOpen(navigate, type, elementId, userName){
             date: serverTimestamp(),
             lastEditionUser: userName
         });
+    }else if(type === "ScopeGraph"){
+        navigate ('/ScopeGraph?element=' + elementId)
+        await updateDoc(doc(db, "elements", elementId), {
+            date: serverTimestamp(),
+            lastEditionUser: userName
+        });
     }else{
         navigate ('/')
     }

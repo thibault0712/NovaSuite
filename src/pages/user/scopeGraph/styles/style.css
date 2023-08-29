@@ -1,0 +1,12 @@
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: rgb(17 24 39); /* Couleur d'arrière-plan par défaut */
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    /* Styles pour le thème clair */
+    background-color: rgb(249, 250, 251);
+  }
+}

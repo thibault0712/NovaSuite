@@ -10,7 +10,8 @@ export async function HandleNewAdrenalia(userUID, userName){
         owner: userUID,
         date: serverTimestamp(),
         lastEditionUser: userName,
-        shared: []
+        shared: [],
+        sharedProperties: {}
     });
     const elementId = elementRef.id
 
