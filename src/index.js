@@ -12,11 +12,16 @@ import Files from './pages/user/homePages/files/files';
 import Shared from './pages/user/homePages/shared/shared'
 import UserProfilEdition from './pages/user/settings/userProfilEdition/UserProfilEdition';
 import reportWebVitals from './reportWebVitals';
+import Presentation from './pages/presentation';
 
 const documentView = createBrowserRouter([
   {
     path: "/inscription",
     element: <Inscription />,
+  },
+  {
+    path: "/presentation",
+    element: <Presentation />,
   },
   {
     path: "/",
