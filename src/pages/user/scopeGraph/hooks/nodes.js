@@ -6,17 +6,27 @@ import ReactFlow, {
     useReactFlow,
     Background
   } from 'reactflow';
+import TextUpdaterNode from "./textUpdaterNode";
+import { GetNodes } from "../synchronization/synchronizationNodes";
+import { HandleNewNode } from "../handleClick/handleNewNode";
+import { HandleNewEdges } from "../handleClick/handleNewEdges";
+import { SynchronizationEdges } from "../synchronization/synchronizationEdges";
+import { HandleRemoveNode } from "../handleClick/handleRemoveNode"
+import { HandleRemoveEdges } from "../handleClick/handleRemoveEdges"
+import { HandleDragNode } from "../handleClick/handleDragNode"
 
-  import TextUpdaterNode from "./textUpdaterNode";
 
-export const Nodes = ({initialNodes, getId, fitViewOptions}) => {
-    const reactFlowWrapper = useRef(null);
-    const connectingNodeId = useRef(null);
-    const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-    const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-    const { project } = useReactFlow();
-    const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
-    
+export const Nodes = ({element, fitViewOptions}) => {
+    const reactFlowWrapper = useRef(null)
+    const connectingNodeId = useRef(null)
+    const [nodes, setNodes, onNodesChange] = useNodesState([])
+    const [edges, setEdges, onEdgesChange] = useEdgesState([])
+    const { project } = useReactFlow()
+    const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges])
+
+    GetNodes(setNodes)
+    SynchronizationEdges(setEdges)
+
     const nodeTypes = useMemo(
         () => ({
             textUpdater: TextUpdaterNode,
@@ -27,6 +37,18 @@ export const Nodes = ({initialNodes, getId, fitViewOptions}) => {
     const onConnectStart = useCallback((_, { nodeId }) => {
       connectingNodeId.current = nodeId;
     }, []);
+
+    const onNodesDelete = useCallback((event) => {
+      HandleRemoveNode(element, event[0])
+    }, [element])
+
+    const onNodeDragStop = useCallback((event, node) => {
+      HandleDragNode(element, node)
+    }, [element])
+
+    const onEdgesDelete = useCallback((event) => {
+      HandleRemoveEdges(element, event)
+    }, [element])
   
     const onConnectEnd = useCallback(
       (event) => {
@@ -35,7 +57,7 @@ export const Nodes = ({initialNodes, getId, fitViewOptions}) => {
         if (targetIsPane) {
           // we need to remove the wrapper bounds, in order to get the correct position
           const { top, left } = reactFlowWrapper.current.getBoundingClientRect();
-          const id = getId();
+          const id = (parseInt(nodes[nodes.length - 1].id) + 1).toString();
           const newNode = {
             id,
             // we are removing the half of the node width (75) to center the new node
@@ -43,12 +65,20 @@ export const Nodes = ({initialNodes, getId, fitViewOptions}) => {
             data: { label: `Node ${id}` },
             type: 'textUpdater'
           };
-  
+          const newEdges = {
+            id, 
+            source: connectingNodeId.current,
+            target: id
+          }
+
+          HandleNewNode(element, newNode)
+          HandleNewEdges(element, newEdges)
+
           setNodes((nds) => nds.concat(newNode));
-          setEdges((eds) => eds.concat({ id, source: connectingNodeId.current, target: id }));
+          setEdges((eds) => eds.concat(newEdges));
         }
       },
-      [project, getId, setNodes, setEdges]
+      [project, setNodes, setEdges, element, nodes]
     );
   
     return (
@@ -58,10 +88,13 @@ export const Nodes = ({initialNodes, getId, fitViewOptions}) => {
           edges={edges}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
+          onNodesDelete={onNodesDelete}
+          onEdgesDelete={onEdgesDelete}
           onConnect={onConnect}
           onConnectStart={onConnectStart}
           onConnectEnd={onConnectEnd}
           nodeTypes={nodeTypes}
+          onNodeDragStop={onNodeDragStop}
           fitView
           fitViewOptions={fitViewOptions}
         >

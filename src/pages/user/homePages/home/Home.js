@@ -15,6 +15,8 @@ import { Link } from 'react-router-dom';
 import { DateTransform } from './components/dateTransform';
 import Avatar from 'react-avatar';
 import { Helmet } from 'react-helmet';
+import NovaSuiteHeader from "../../../../data/images/NovaSuiteHeader.ico"
+
 
 function Home() {
   const navigate = useNavigate();
@@ -48,6 +50,8 @@ function Home() {
         <title>Accueil - NovaSuite</title>
         <meta name="description" content="NovaSuite est une suite d'outils pour faciliter l'organisation au quotidien ou dans la gestion de projets en groupe ou en solo." />
         <meta name="keywords" content="NovaSuite, outils d'organisation, projet en groupe, projet en solo, accueil, home" />
+        <link rel="icon" href={NovaSuiteHeader} />
+        <link rel="apple-touch-icon" href={NovaSuiteHeader} />
       </Helmet>
       <header className="flex sticky top-0 z-50 items-center justify-between flex-wrap bg-white dark:bg-gray-900 p-3">
         <div className="flex items-center flex-shrink-0 text-white ml-4">

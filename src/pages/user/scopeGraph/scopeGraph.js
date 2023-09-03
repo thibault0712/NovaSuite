@@ -8,25 +8,13 @@ import { ReactFlowProvider } from 'reactflow';
 import 'reactflow/dist/style.css';
 import {ScopeGraphHeader} from './hooks/scopeGraphHeader';
 import {Nodes} from './hooks/nodes'
-import TextUpdaterNode from './hooks/textUpdaterNode';
 
 function ScopeGraph() {
   const navigate = useNavigate();
   const location = useLocation();
   const authentication = getAuth();
   const [userData, setUserData] = useState([]);
-  
-  const initialNodes = [
-    {
-      id: '0',
-      data: { label: 'Node' },
-      position: { x: 0, y: 50 },
-      type: 'textUpdater'
-    },
-  ];
-  
-  let id = 1;
-  const getId = () => `${id++}`;
+  const [element, setElement] = useState();
   
   const fitViewOptions = {
     padding: 3,
@@ -36,6 +24,7 @@ function ScopeGraph() {
     try {
       const searchParams = new URLSearchParams(location.search);
       const element = searchParams.get('element');
+      setElement(element)
       onAuthStateChanged(authentication, async (user) => {
         if (!user) {
           navigate('/login');
@@ -55,13 +44,14 @@ function ScopeGraph() {
       } catch (error) {
         navigate('/')
       }
+
   }, [authentication, navigate, location.search]);
 
   return(    
     <>
     <ScopeGraphHeader userData={userData} authentication={authentication} navigate={navigate}/>
     <ReactFlowProvider>
-      <Nodes initialNodes={initialNodes} getId={getId} fitViewOptions={fitViewOptions}/>
+      <Nodes element={element} fitViewOptions={fitViewOptions}/>
     </ReactFlowProvider>
     </>);
 };

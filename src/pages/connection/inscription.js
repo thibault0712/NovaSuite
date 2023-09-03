@@ -4,6 +4,8 @@ import { HandleInscription } from './handleClick/handleInscription.js'
 import { useNavigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { Helmet } from 'react-helmet';
+import NovaSuiteHeader from "../../data/images/NovaSuiteHeader.ico"
+
 
 function Inscription() {
     const navigate = useNavigate();
@@ -37,6 +39,8 @@ function Inscription() {
             <title>S'inscrire - NovaSuite</title>
             <meta name="description" content="S'inscrire à NovaSuite avec une adresse email ! NovaSuite est une suite d'outils pour faciliter l'organisation au quotidien ou dans la gestion de projets en groupe ou en solo." />
             <meta name="keywords" content="s'inscrire, NovaSuite, outils d'organisation, projet en groupe, projet en solo" />
+            <link rel="icon" href={NovaSuiteHeader} />
+            <link rel="apple-touch-icon" href={NovaSuiteHeader} />
           </Helmet>
           <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <div className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">

@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import { MotionAnimate } from 'react-motion-animate'
 import { useEffect, useState } from "react";
 import { MdAndroid } from "react-icons/md";
+import NovaSuiteHeader from "../data/images/NovaSuiteHeader.ico"
 
 function Presentation() {
 
@@ -18,6 +19,8 @@ function Presentation() {
                 <title>NovaSuite - Simplifiez la Gestion de Projets</title>
                 <meta name="description" content="NovaSuite vous offre une suite d'outils pour simplifier la gestion quotidienne ou de projets en groupe ou en solo." />
                 <meta name="keywords" content="NovaSuite, outils d'organisation, gestion de projets, collaboration, se connecter, s'inscrire" />
+                <link rel="icon" href={NovaSuiteHeader} />
+                <link rel="apple-touch-icon" href={NovaSuiteHeader} />
             </Helmet>
             <header className="flex-shrink-0 sticky top-0 z-40 flex items-center justify-between bg-gray-900 p-3">
                     <div className="flex items-center flex-shrink-0 text-white">
@@ -36,7 +39,7 @@ function Presentation() {
                     {isMobile && 
                         <MotionAnimate animation='fadeInUp' distance={200} speed={1}>
                             <a
-                                href="lien_vers_votre_apk"
+                                href="https://novasuite.web.app/downloadable/Android.apk"
                                 className="flex items-center bg-blue-600 hover:bg-blue-600/50 text-white font-semibold py-2 px-6 rounded transition duration-300"
                                 download
                             >

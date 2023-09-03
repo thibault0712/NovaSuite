@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { Handle, Position } from 'reactflow';
 
 function TextUpdaterNode({ data, isConnectable }) {
-  const [textareaValue, setTextareaValue] = useState('');
+  const [textareaValue, setTextareaValue] = useState(data.label);
 
   const onChange = useCallback((evt) => {
     const newValue = evt.target.value;
@@ -22,7 +22,7 @@ function TextUpdaterNode({ data, isConnectable }) {
           name="text"
           onChange={onChange}
           value={textareaValue}
-          className="text-center text-sm cursor-move w-full resize-none outline-none focus:border-transparent dark:text-white dark:bg-gray-600"
+          className="text-center text-sm w-full resize-none outline-none focus:border-transparent dark:text-white dark:bg-gray-600 cursor-text"
           rows={1}
         />
       </div>
