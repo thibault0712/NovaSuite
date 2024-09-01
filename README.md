@@ -14,8 +14,8 @@ Pour découvrir NovaSuite et accéder à ses outils, veuillez visiter le site of
 
 Avant de pouvoir utiliser NovaSuite, assurez-vous d'avoir les éléments suivants installés :
 
-- Node.js (version X.X.X)
-- npm (version X.X.X)
+- Node.js 
+- npm 
 
 ## Installation et exécution
 
@@ -24,7 +24,7 @@ Suivez ces étapes pour installer et exécuter NovaSuite sur votre machine local
 1. Clonez le projet depuis GitHub :
 
 ```bash
-git clone https://github.com/VotreUtilisateur/NovaSuite.git
+git clone https://github.com/thibault0712/NovaSuite.git
 ```
 
 2. Accédez au répertoire du projet 
