@@ -8,7 +8,7 @@ NovaSuite est une suite d'outils web conçue pour aider les développeurs dans l
 
 ## Site Web
 
-Pour découvrir NovaSuite et accéder à ses outils, veuillez visiter le site officiel : [NovaSuite](https://novasuite.web.app).
+Pour découvrir NovaSuite et accéder à ses outils, veuillez visiter le site officiel : [NovaSuite](https://novasuite.web.app/presentation).
 
 ## Prérequis
 
@@ -43,3 +43,8 @@ npm start
 ```
 
 5. Ouvrez votre navigateur et accédez à l'adresse suivante : http://localhost:3000
+
+# Objectifs :
+J'abandonne novasuite petit à petit car je ne suis plus convaincu par le projet mais voici des mises à jour qui peuvent arriver un jour
+ - Refaire le design complet (surtout la page de login et le logo)
+ - Terminer scopegraphe
