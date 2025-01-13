@@ -3,12 +3,12 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 ## Description
-
+PROJET PLUS MAINTENU
 NovaSuite est une suite d'outils web conçue pour aider les développeurs dans leur travail quotidien. Elle propose une variété de fonctionnalités visant à améliorer l'organisation, la productivité et la collaboration au sein de projets de développement.
 
 ## Site Web
-
 Pour découvrir NovaSuite et accéder à ses outils, veuillez visiter le site officiel : [NovaSuite](https://novasuite.web.app/presentation).
+Pour en apprendre plus sur pourquoi ce projet : [Article](https://thibaultfalezan.notion.site/Novasuite-14772a954f3f805b95a8c0b24743ac59]
 
 ## Prérequis
 
